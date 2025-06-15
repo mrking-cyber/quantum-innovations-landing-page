@@ -1,0 +1,423 @@
+/*
+ * Custom CSS for Your Organization Landing Page - Upgraded Version
+ * Uses CSS Variables for theme management, fluid typography, and consistent spacing.
+ */
+
+/* --- 1. Global Styles & CSS Variables --- */
+:root {
+    /* --- Colors --- */
+    --color-primary: #3f51b5;         /* Indigo - Main brand color */
+    --color-primary-dark: #303f9f;    /* Darker Indigo for hover states */
+    --color-secondary: #00bcd4;       /* Cyan - Optional accent color (e.g., for icons/highlights) */
+    --color-secondary-dark: #0097a7;  /* Darker Cyan */
+
+    --color-text-dark: #212529;       /* Dark gray for most body text (Bootstrap's default dark) */
+    --color-text-light: #6c757d;      /* Muted gray for secondary text */
+    --color-heading: #343a40;         /* Darker gray for headings */
+
+    --color-bg-white: #ffffff;        /* Pure white background */
+    --color-bg-light: #f8f9fa;        /* Light gray background (Bootstrap's default light) */
+    --color-bg-dark: #2c3e50;         /* Dark blue-gray for footer/dark sections */
+    --color-bg-darker: #1e2b3e;       /* Even darker for deeper contrast in dark areas */
+
+    --color-border-light: #e9ecef;    /* Light border color */
+    --color-overlay-dark: rgba(0, 0, 0, 0.5); /* Dark overlay for hero */
+    --color-overlay-light: rgba(255, 255, 255, 0.7); /* Light overlay if needed */
+
+
+    /* --- Typography --- */
+    --font-family-heading: 'Montserrat', sans-serif;
+    --font-family-body: 'Open Sans', sans-serif;
+
+    /* Fluid font sizes using clamp(min, preferred, max) */
+    --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px to 18px */
+    --font-size-h1: clamp(2.8rem, 2.2rem + 3vw, 4.5rem);      /* ~45px to 72px */
+    --font-size-h2: clamp(2rem, 1.6rem + 2vw, 3.5rem);        /* ~32px to 56px */
+    --font-size-h5: clamp(1.1rem, 1.05rem + 0.1vw, 1.25rem); /* For card titles */
+    --font-size-lead: clamp(1.25rem, 1.1rem + 0.5vw, 1.6rem); /* For lead paragraphs */
+
+    --line-height-body: 1.7;
+    --line-height-heading: 1.2;
+
+    /* --- Spacing --- */
+    --spacing-unit: 1rem; /* Base unit for consistent spacing */
+    --spacing-xs: calc(var(--spacing-unit) * 0.5);   /* 8px */
+    --spacing-sm: calc(var(--spacing-unit) * 1);    /* 16px */
+    --spacing-md: calc(var(--spacing-unit) * 1.5);   /* 24px */
+    --spacing-lg: calc(var(--spacing-unit) * 2.5);   /* 40px */
+    --spacing-xl: calc(var(--spacing-unit) * 4);    /* 64px */
+    --spacing-xxl: calc(var(--spacing-unit) * 6);   /* 96px */
+
+    --section-padding-y: var(--spacing-xxl); /* Default vertical padding for sections */
+
+
+    /* --- Borders & Shadows --- */
+    --border-radius-default: 0.5rem; /* 8px */
+    --border-radius-button: 0.3rem;  /* 4.8px - Matches original */
+
+    --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075); /* Bootstrap's shadow-sm */
+    --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);      /* Custom for cards on hover */
+    --shadow-lg: 0 1rem 3rem rgba(0,0,0,.175);      /* More prominent shadow */
+
+    /* --- Transitions --- */
+    --transition-default: all 0.3s ease-in-out;
+}
+
+html {
+    font-size: var(--font-size-base);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family-body);
+    color: var(--color-text-dark);
+    line-height: var(--line-height-body);
+    background-color: var(--color-bg-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+    color: var(--color-heading);
+    font-weight: 700;
+    line-height: var(--line-height-heading);
+    margin-block-start: var(--spacing-sm); /* Spacing for headings */
+    margin-block-end: var(--spacing-md);
+}
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h5 { font-size: var(--font-size-h5); } /* For card titles */
+
+
+p.lead {
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-heading); /* Tighter line-height for lead */
+}
+
+/* --- Reusable Buttons (Overrides Bootstrap for consistent styling) --- */
+.btn-primary.custom-btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    font-weight: 600;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-button);
+    transition: var(--transition-default);
+}
+
+.btn-primary.custom-btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-light.custom-btn-light {
+    background-color: var(--color-bg-white);
+    border-color: var(--color-bg-white);
+    color: var(--color-primary);
+    font-weight: 600;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-button);
+    transition: var(--transition-default);
+}
+
+.btn-light.custom-btn-light:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-bg-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* --- 2. Header (Navbar) Styles --- */
+.navbar {
+    background-color: var(--color-bg-white) !important; /* Ensure white background */
+    border-bottom: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-sm);
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+}
+
+.navbar-brand {
+    font-size: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem); /* Fluid brand font size */
+    font-weight: 700;
+    color: var(--color-heading) !important;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    margin-right: var(--spacing-xs);
+}
+
+.navbar-nav .nav-link {
+    color: var(--color-text-dark);
+    font-weight: 600;
+    margin-right: var(--spacing-md);
+    transition: var(--transition-default);
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--color-primary);
+}
+
+/* --- 3. Section Specific Styles --- */
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    min-height: 80vh;
+    padding-top: calc(var(--spacing-xxl) + 100px); /* Add padding for header + extra */
+    padding-bottom: var(--spacing-xxl);
+    background-size: cover;
+    background-position: center;
+    color: var(--color-bg-white); /* White text for hero */
+    display: flex; /* Ensure content is centered vertically */
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-overlay-dark);
+    z-index: 0;
+}
+
+.hero-section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section h1 {
+    font-size: var(--font-size-h1);
+    color: var(--color-bg-white); /* White heading */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Stronger text shadow */
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-section p.lead {
+    font-size: var(--font-size-lead);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* About Us Section */
+.about-section {
+    padding-top: var(--section-padding-y);
+    padding-bottom: var(--section-padding-y);
+}
+
+.about-section h2 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.about-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.about-section ul li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-dark); /* Ensure list item text color */
+}
+
+.about-section ul li::before {
+    content: "\f00c"; /* Font Awesome checkmark icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    top: 0.15em; /* Adjust based on line-height for vertical alignment */
+}
+
+/* Services Section */
+.services-section {
+    background-color: var(--color-bg-light); /* Light gray background */
+    padding-top: var(--section-padding-y);
+    padding-bottom: var(--section-padding-y);
+}
+
+.services-section h2 {
+    margin-bottom: var(--spacing-xl);
+}
+
+.services-section .card {
+    border-radius: var(--border-radius-default);
+    transition: var(--transition-default);
+    border: none; /* Remove default Bootstrap card border */
+    box-shadow: var(--shadow-sm); /* Subtle initial shadow */
+}
+
+.services-section .card:hover {
+    transform: translateY(-8px); /* More pronounced lift effect on hover */
+    box-shadow: var(--shadow-lg) !important; /* Stronger shadow on hover */
+}
+
+.services-section .card-body {
+    padding: var(--spacing-lg);
+}
+
+.services-section .card-title {
+    color: var(--color-heading); /* Card title color */
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.services-section .card-text {
+    color: var(--color-text-light); /* Card text color */
+}
+
+
+/* Call to Action Section (CTA) */
+.cta-section {
+    background-color: var(--color-primary) !important; /* Ensure primary color background */
+    color: var(--color-bg-white);
+    text-align: center;
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+}
+
+.cta-section h2 {
+    color: var(--color-bg-white);
+    font-size: var(--font-size-h2);
+    margin-bottom: var(--spacing-md);
+}
+
+.cta-section p.lead {
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: var(--spacing-lg);
+}
+
+
+/* Contact Form Section */
+.contact-section {
+    padding-top: var(--section-padding-y);
+    padding-bottom: var(--section-padding-y);
+}
+
+.contact-section h2 {
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-section .form-label {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-dark); /* Label color */
+}
+
+.contact-section .form-control {
+    border-radius: var(--border-radius-button);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border-light);
+    color: var(--color-text-dark); /* Input text color */
+    background-color: var(--color-bg-white);
+    transition: var(--transition-default);
+}
+
+.contact-section .form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--color-primary-rgb), .25); /* Re-evaluating Bootstrap's focus shadow with variable */
+}
+/* This requires a slight adjustment for Bootstrap's rgb variable, but will work */
+/* For Bootstrap's focus shadow to perfectly use your variable, you might need to
+   define --bs-primary-rgb in your :root if you want to override it universally
+   or use a direct rgba value here. For simplicity, we'll keep the direct rgba for now
+   or use a fixed value. Let's make it a fixed value based on your primary.
+*/
+.contact-section .form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.25); /* RGB of #3f51b5 */
+}
+
+
+/* --- 4. Footer Styles --- */
+footer {
+    background-color: var(--color-bg-dark) !important; /* Dark blue-gray footer */
+    color: var(--color-bg-light); /* Light text for footer */
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+}
+
+footer p {
+    font-size: var(--font-size-base); /* Ensure readability for footer text */
+    opacity: 0.9;
+}
+
+footer a {
+    color: var(--color-text-light); /* Muted gray for footer links */
+    text-decoration: none;
+    transition: var(--transition-default);
+}
+
+footer a:hover {
+    color: var(--color-bg-white);
+}
+
+footer .list-inline-item {
+    margin: 0 var(--spacing-xs);
+}
+
+footer .fab {
+    font-size: 1.8rem; /* Slightly larger social icons */
+    transition: var(--transition-default);
+}
+
+footer .fab:hover {
+    color: var(--color-primary); /* Primary color on social icon hover */
+}
+
+
+/* --- 5. Responsive Adjustments --- */
+@media (max-width: 991.98px) { /* Medium devices (tablets) */
+    .navbar-collapse {
+        text-align: center;
+        background-color: var(--color-bg-white);
+        border-top: 1px solid var(--color-border-light);
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 100%; /* Position below the header */
+        box-shadow: var(--shadow-md);
+        z-index: 1000;
+    }
+    .navbar-nav .nav-link {
+        margin-right: 0; /* Remove horizontal margin */
+        padding: var(--spacing-sm) 0; /* Vertical padding for mobile nav links */
+    }
+}
+
+@media (max-width: 767.98px) { /* Small devices (mobile) */
+    .hero-section {
+        min-height: 60vh; /* Adjust hero height for smaller screens */
+        padding-top: var(--spacing-xxl);
+        padding-bottom: var(--spacing-xxl);
+    }
+    .hero-section h1 {
+        font-size: clamp(2rem, 1.8rem + 1.5vw, 2.5rem); /* Smaller heading on mobile */
+    }
+    .hero-section p.lead {
+        font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+    }
+
+    .about-section img {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .services-section .card {
+        margin-bottom: var(--spacing-md); /* Add space between cards on mobile */
+    }
+}
